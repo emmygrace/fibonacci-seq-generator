@@ -1,0 +1,133 @@
+
+.fib-sequence {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    width: 50%;
+    margin: 1em auto;
+    padding-bottom: 3em;
+}
+
+.seq-number {
+    margin: 0 0.2em;
+}
+
+.fib-input {
+    display: flex;
+}
+
+form {
+    margin: 0em auto 1em auto;
+    display: table;
+}
+
+input, label {
+    border-width: .1em;
+    font-size: 1em;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 500;
+    border-style: solid;
+    border-color: #FFFFFF;
+    box-sizing: border-box;
+    outline-style: none;
+    -webkit-transition: .18s ease-out;
+    -moz-transition: .18s ease-out;
+    -o-transition: .18s ease-out;
+    transition: .18s ease-out;
+}
+
+input[type=text] {
+    padding: .5em .5em .5em .5em;
+    width: 8em;
+    background-color: transparent;
+    color: #FFFFFF;
+}
+
+input[type=submit] {
+    margin-left: -0.1em;
+    padding: .5em .5em;
+    border-radius: 0em .2em .2em 0em;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+input[type=submit]:hover {
+    background-color: #BBBBBB;
+}
+
+input[type=submit]:active {
+    color:#FFFFFF;
+    background-color: transparent;
+}
+
+.onoffswitch {
+    position: relative;
+    margin-right: -0.1em;
+    width: 5em;
+    -webkit-user-select:none; 
+    -moz-user-select:none; 
+    -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; 
+    overflow: hidden; 
+    cursor: pointer;
+    border-style: solid;
+    border-color: #FFFFFF; 
+    border-radius: .2em 0em 0em .2em;
+}
+.onoffswitch-inner {
+    display: block; 
+    width: 200%; 
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; 
+    float: left; 
+    width: 50%; 
+    color: #343028; 
+    font-family: 'Roboto',sans-serif;
+    font-weight: 500;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Server";
+    padding: .5em .5em .5em .4em;
+    background-color: #282c34; 
+    color: #FFFFFF;
+    text-align: left;
+}
+.onoffswitch-inner:after {
+    content: "Local";
+    padding: .5em .7em .5em .5em;
+    background-color: #FFFFFF; 
+    color: #343028;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; 
+    width: .6em; 
+    margin: .2em .2em;
+    background: transparent;
+    background-color: #955898;
+    position: absolute; 
+    top: 25%; 
+    bottom: 25%;
+    right: 3.4em;
+    border-style: solid;
+    border-color: #955898; 
+    border-radius: .2em .2em;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: .3em;
+    background-color: #fb8361;
+    border-color: #FFFFFF;
+}
