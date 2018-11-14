@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const app = express()
-const port = 8080 
+const port = 9090 
 const cors = require('cors')
 
 // not going to reinvent the wheel
