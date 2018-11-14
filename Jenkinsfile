@@ -1,13 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node'
-            args '-p 8080:8080'
-        }
-    }
-    environment {
-        CI = 'true'
-    }
+    agent any
     stages {
         stage('Build') {
             steps {
