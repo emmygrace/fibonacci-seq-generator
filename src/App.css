@@ -66,17 +66,17 @@ code {
 #topButton {
   display: none; 
   position: fixed; 
-  bottom: 20px; 
-  right: 30px; 
+  bottom: 2em; 
+  right: 2em; 
   z-index: 99; 
   border: none; 
   outline: none; 
-  background-color: red; 
+  background-color: #fb8361; 
   color: white; 
   cursor: pointer; 
-  padding: 15px; 
-  border-radius: 10px; 
-  font-size: 18px; 
+  padding: 1em; 
+  border-radius: .7em; 
+  font-size: 1em; 
 }
 
 #topButton:hover {

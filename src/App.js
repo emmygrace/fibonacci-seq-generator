@@ -10,7 +10,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll); // Top control
   }
 
   handleScroll() { 
@@ -36,9 +36,7 @@ class App extends Component {
         </header>
         <Controls />
         <button id="topButton" onClick={this.scrollToTop}>Top</button>
-        <footer>
-          <p>Notes: Timestamps may be inaccurate due to browser security settings. Local algorithm is limited to 1024 while node is limited to 8192 due to issues resolving precision.</p>
-          <p>To start the Nodejs server, execute <code>docker up</code> or <code>node server.js</code> in the root directory.</p>
+        <footer>       
           <p>Made with <span role="img" aria-label="love">❤️</span> in Columbia, S.C.</p>
         </footer>
       </React.Fragment>

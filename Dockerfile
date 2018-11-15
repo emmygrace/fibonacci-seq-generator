@@ -6,9 +6,9 @@ WORKDIR /appdir
 COPY package.json /appdir
 RUN npm install
 
-RUN npm run build
-
 COPY . /appdir
+
+RUN npm run build
 
 EXPOSE 9090
 CMD [ "node", "server.js" ]

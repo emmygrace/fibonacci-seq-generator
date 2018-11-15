@@ -8,12 +8,14 @@ const cors = require('cors')
 var fibonacci = require('fibonacci-fast');
 
 const isvalid = (num) => {
+	// server side validation
 	// hardware reqs not yet defined
 	return (num<=8192 && Math.sign(num)>=0)
 }
 
 app.use(express.static(path.join(__dirname, 'build')));
 
+// Serve react dist
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -27,31 +29,23 @@ app.use((req, res, next) => {
    next()
 })
 
+// single endpoint
 app.get('/:in', (req, res, next) => {
-	// start time
-	req.startTime = Date.now()
-	console.log('start' + Date.now())
-	next()
-
-}, (req, res, next) => {
+	// middleware
 	// validate input
 	let num = req.params.in
 
 	if (isvalid(num)) next()
 	else next('route') 
-
+	
 }, (req, res) => {
 	// calculate sequence
 	let seq = fibonacci.array(0, req.params.in).map(x => x.number);
-	let reqTime = Date.now() - req.startTime
-	console.log('end' + Date.now())
-	console.log('total' + reqTime)
-	res.status(200).json({sequence:seq, time:reqTime})
+	res.status(200).json({sequence:seq})
 })
 
-
+// alternative route for invalid input
 app.get('/:in', (req, res, next) => {
-	// input invalid
 	res.status(200).json({error: 'Input is invalid: ' + req.params.in})
 })
 

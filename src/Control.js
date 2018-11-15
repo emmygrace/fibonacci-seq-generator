@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import './Control.css'
 
-const SERVER_ENDPOINT = 'http://localhost:8080/'
+const SERVER_ENDPOINT = 'http://localhost:9090/'
+const fibErrorMessage = 'Please choose an integer N where 1025 < N < -1'
 
-// local datasource
-// time: linear - O(N)
-// space: constant
+// "local" algorithm
 const fib = (n) => {
-  if (n>1024) {
-    return {error:'Please choose an integer <= 1024'}
-  }
-  let start = Date.now()
   let arr = []
   for(let i = 0; i < n; i++ ){
       if(i === 0 || i === 1){
@@ -21,91 +16,84 @@ const fib = (n) => {
           arr.push(a + b)
       }
   }
-  return {sequence: arr, time: Date.now()-start}
+  return {sequence: arr}
 }
 
-const ErrorMessage = (props) => {
-  return (
-    <div>
-      <span>Error: {props.message}</span>
-    </div>
-  )
+const FibErrorMessage = (props) => {
+  return <span className="fib-error">{props.error}</span>
 }
 
-const Sequence = (props) => {
-  let formattedSequence 
-  if (props.array)
-    formattedSequence = Array.from(props.array).map((n,i) => <span key={i} className="seq-number">{n}</span>)
-  return (
-    <div>
-        <span>Result calculated in {props.time} milliseconds: </span>
-        <div className="fib-sequence">{formattedSequence}</div>
-    </div>
-  )
+const FibSequence = (props) => {
+  return <div className="fib-sequence">{Array.from(props.sequence).map((n,i) => <span key={i} className="seq-number">{n}</span>)}</div>
 }
 
-const Results = props => {
-  let out = props.error ? <ErrorMessage message={props.error} /> : <Sequence array={props.sequence} time={props.time} />
-  return (
-    <div>{out}</div>
-  )
+const initialControlState = {
+  value: '',
+  error: null,
+  sequence: null,
+  isDatasourceRemote: true,
+  showResults: false,
 }
 
 export class Controls extends Component {
     constructor(props) {
       super(props)
-      this.state = {
-        value: '',
-        error: null,
-        sequence: null,
-        time: null,
-        isDatasourceRemote: true,
-        isLoading: false,
-      }
-
+      this.state = initialControlState
       this.handleDatasourceChange = this.handleDatasourceChange.bind(this)
       this.handleInputChange = this.handleInputChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
   
+    // give us a way to reset state
+    reset() {
+      this.setState(initialControlState)
+    }
+
     handleInputChange(event) {
       event.preventDefault();
       this.setState({value: event.target.value})
     }
 
     handleDatasourceChange(event) {
-      this.setState( state => ({isDatasourceRemote: !state.isDatasourceRemote}))
+      // don't reset datasource or input value
+      let newState = {
+        isDatasourceRemote:!this.state.isDatasourceRemote,
+        value: this.state.value,
+      }
+      this.reset()
+      this.setState(state => newState)
     }
 
     handleSubmit(event) {
-      let input = this.state.value;
+      
+      let input = Number.parseInt(this.state.value)
 
-      if (this.state.isDatasourceRemote) {
+      this.setState({error: null}) // lazy hack
 
-        //TODO no response
-        fetch(SERVER_ENDPOINT + input)
-          .then(res => res.json())
-          .then(data => { 
-            if (data.error) {
-              this.setState({ 
-                error: data.error,
-              })
-            } else {
-              this.setState({
-                sequence: data.sequence, 
-                time: data.time,
-              })
-            }
-          })
+      // frontend validation
+      if(input < 1024 && input > 0 && Number.isInteger(input)) {
 
-      } else {
-        let local = fib(input);
-        this.setState({error: local.error, sequence: local.sequence, time: local.time})
+        if(this.state.isDatasourceRemote) {
+          // REST service
+          fetch(SERVER_ENDPOINT + input)
+            .then(res => res.json())
+            .then(data => this.setState({sequence: data.sequence}))
+            .catch(error => this.setState({error: 'ERR_CONNECTION_REFUSED', sequence: null})) // network error, hack
+        } else {
+          // "local" service
+          this.setState({sequence: fib(input).sequence})
+        }
+      } else { 
+        this.setState({error: fibErrorMessage})
       }
+      this.setState({showResults: true})
       event.preventDefault();
     }
   
     render() {
+      let error = this.state.error ? <FibErrorMessage error={this.state.error} /> : null
+      let sequence = this.state.sequence ? <FibSequence sequence={this.state.sequence} /> : null
+
       return (
         <React.Fragment>
           <div className="fib-ctl">
@@ -122,7 +110,8 @@ export class Controls extends Component {
                     <input type="submit" onClick={this.handleSubmit} value="Go!" />
                   </div>
               </form> 
-            <Results error={this.state.error} sequence={this.state.sequence} time={this.state.time} />
+              {error}
+              {sequence}
           </div>
         </React.Fragment>
       )

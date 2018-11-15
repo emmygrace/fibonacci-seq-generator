@@ -1,4 +1,3 @@
-
 .fib-sequence {
     display: flex;
     flex-flow: row wrap;
@@ -8,9 +7,27 @@
     padding-bottom: 3em;
 }
 
+.seq-number .fib-error {
+    animation: fadein 1s;
+}
+
 .seq-number {
     margin: 0 0.2em;
 }
+
+.fib-error {
+    color: #fb8361;
+}
+
+@keyframes fadein {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
 
 .fib-input {
     display: flex;
@@ -104,22 +121,22 @@ input[type=submit]:active {
 .onoffswitch-inner:after {
     content: "Local";
     padding: .5em .7em .5em .5em;
-    background-color: #FFFFFF; 
-    color: #343028;
+    background-color: #282c34; 
+    color: #FFFFFF;
     text-align: right;
 }
 .onoffswitch-switch {
     display: block; 
-    width: .6em; 
+    width: .7em; 
     margin: .2em .2em;
     background: transparent;
-    background-color: #955898;
+    background-color: #282c34;
     position: absolute; 
     top: 25%; 
     bottom: 25%;
     right: 3.4em;
     border-style: solid;
-    border-color: #955898; 
+    border-color: #FFFFFF; 
     border-radius: .2em .2em;
     transition: all 0.3s ease-in 0s; 
 }
@@ -127,7 +144,9 @@ input[type=submit]:active {
     margin-left: 0;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: .3em;
-    background-color: #fb8361;
-    border-color: #FFFFFF;
+    right: .4em;
+    background-color: #8dfb61;
+    border-style: solid;
+    border-radius: .2em .2em;
+    border-color: #8dfb61;
 }
