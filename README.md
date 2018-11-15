@@ -25,8 +25,8 @@ sudo docker run -d --name fib-seq-gen -p 9090:9090 fib:5
 4. Visit `localhost:9090` in your browser. You can run `sudo docker stop fib-seq-gen` to kill the container.
 
 #### Local Only - No docker needed
-1. Clone repository to local `git clone github.com/kw4bq/fibonacci-seq-generator` and  `cdfibonacci-seq-generator`
-2. Run `npm run build` to build the react dist/production files in the build folder
+1. Clone repository to local `git clone github.com/kw4bq/fibonacci-seq-generator` and  `cd fibonacci-seq-generator`
+2. Run `npm install` followed by `npm run build` to build the react dist/production files in the `build` folder
 3. Run `node server.js` to start the Nodejs Express server.
 4. Visit `localhost:9090` in your browser.
 5. `Control C` in the terminal to kill `node`.
