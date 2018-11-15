@@ -1,0 +1,127 @@
+Started by user emery clark
+Obtained Jenkinsfile from git https://github.com/kw4bq/fibonacci-seq-generator
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/fib-seq-gen
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/kw4bq/fibonacci-seq-generator # timeout=10
+Fetching upstream changes from https://github.com/kw4bq/fibonacci-seq-generator
+ > git --version # timeout=10
+ > git fetch --tags --progress https://github.com/kw4bq/fibonacci-seq-generator +refs/heads/*:refs/remotes/origin/*
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git rev-parse refs/remotes/origin/origin/master^{commit} # timeout=10
+Checking out Revision fb1807e8107ff49069899d89444e371599e049cf (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f fb1807e8107ff49069899d89444e371599e049cf
+Commit message: "refactoring"
+ > git rev-list --no-walk 737c9153e3230d02c3caa27a61df3ec64443acee # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . node:8-alpine
+.
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 227e06d9a963d231a7d938d12e002a56a3d326308c6a180a4d2734055306f241
+$ docker run -t -d -u 0:0 -p 3000:3000 -w /var/jenkins_home/workspace/fib-seq-gen --volumes-from 227e06d9a963d231a7d938d12e002a56a3d326308c6a180a4d2734055306f241 -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** node:8-alpine cat
+$ docker top 8f6e169f01d9a69f68ede2daca373c13071b4bd8084040230415a801e7fef24e -eo pid,comm
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+Building...
+[Pipeline] sh
++ npm install
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+added 4 packages from 2 contributors, removed 3 packages, updated 2 packages and audited 35770 packages in 10.093s
+found 0 vulnerabilities
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] echo
+Testing...
+[Pipeline] sh
++ npm test
+
+> fib@0.0.1 test /var/jenkins_home/workspace/fib-seq-gen
+> react-scripts test
+
+PASS src/App.test.js
+  ✓ renders without crashing (26ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.369s
+Ran all test suites.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] echo
+Deploying...
+[Pipeline] sh
++ npm run build
+
+> fib@0.0.1 build /var/jenkins_home/workspace/fib-seq-gen
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  34.45 KB          build/static/js/1.0eec96f4.chunk.js
+  1.63 KB (-180 B)  build/static/js/main.97277a6d.chunk.js
+  1.27 KB (+47 B)   build/static/css/main.3a11fb23.chunk.css
+  763 B             build/static/js/runtime~main.229c360f.js
+
+The project was built assuming it is hosted at the server root.
+You can control this with the homepage field in your package.json.
+For example, add this to build it for GitHub Pages:
+
+  "homepage" : "http://myname.github.io/myapp",
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  http://bit.ly/CRA-deploy
+
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] input
+Deploy complete. Please Click "Proceed" to continue.
+Proceed or Abort
+Approved by emery clark
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+$ docker stop --time=1 8f6e169f01d9a69f68ede2daca373c13071b4bd8084040230415a801e7fef24e
+$ docker rm -f 8f6e169f01d9a69f68ede2daca373c13071b4bd8084040230415a801e7fef24e
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
