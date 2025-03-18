@@ -12,8 +12,8 @@ Prereqs:
 #### Docker Method 1 - No code checkout
 1. This will pull the code straight from github into the docker daemon where it will be built first and then run. We are using `fib:5` tag and container name `fib-seq-gen`. Don't worry the `--rm` in the command here simply instructs docker to remove 'intermediary' fs layers during the build as to not take up any space. 
 ```bash
-sudo docker build --rm -t fib:5 github.com/kw4bq/fibonacci-seq-generator && \
-sudo docker run -d --name fib-seq-gen -p 9090:9090 fib:5
+docker build --rm -t fib:5 github.com/kw4bq/fibonacci-seq-generator && \
+docker run -d --name fib-seq-gen -p 9090:9090 fib:5
 ```
 
 2. Visit `localhost:9090` in your browser. You can run `sudo docker stop fib-seq-gen` to kill the container.
